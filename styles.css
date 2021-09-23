@@ -1,0 +1,33 @@
+.header{
+    text-align: center;
+    font-family: sans-serif;
+}
+.game-grid{
+    padding:20px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 0px;
+    justify-content: center;
+}
+
+[class*="grid-"]{
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 70px;
+    font-family:sans-serif;
+}
+
+.turn{
+    padding:20px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.result{
+    text-align: center;
+    font-family: sans-serif;
+    padding:20px;
+}
