@@ -2,7 +2,7 @@ const gameBoard = (()=>{
     //let boardArr=['X','O','X','X','O','O','X','X','O'];
     let boardArr=[];
 
-    const setBoardArr=(newArr)=>{ boardArr=newArr; }
+    const setBoardArr=(newArr)=>{ boardArr=newArr;}
 
     const getBoardArr=()=>{ return boardArr; };
 
@@ -13,7 +13,12 @@ const gameBoard = (()=>{
             grid.textContent=boardArr[i];
         }
     }
-
+    const checkTie=()=>{
+        for(let i=0;i<9;i++){
+            if(boardArr[i]==undefined) return false;
+        }
+        return true;
+    }
     const checkWin=()=>{
         if(boardArr[0]===boardArr[1] && boardArr[0]===boardArr[2] && boardArr[0]!=undefined) return true;
         if(boardArr[3]===boardArr[4] && boardArr[3]===boardArr[5] && boardArr[3]!=undefined) return true;
@@ -33,6 +38,7 @@ const gameBoard = (()=>{
         setBoardArr,
         getBoardArr,
         fillBoard,
+        checkTie,
         checkWin
     };
 
@@ -41,6 +47,16 @@ const gameBoard = (()=>{
 const playerControl=(()=>{
 
     let turn=document.querySelector(".turn");
+    let p1name="Player 1";
+    let p2name="Player 2";
+
+    const setP1Name=(newName)=>{
+        p1name=newName;
+    }
+
+    const setP2Name=(newName)=>{
+        p2name=newName;
+    }
 
     const playerOne=()=>{
         return 'X';
@@ -59,18 +75,21 @@ const playerControl=(()=>{
     }
 
     const displayPlayer=()=>{
-        turn.textContent="Current Turn-"+(current==1?`Player two: '${playerTwo()}'`:`Player one: '${playerOne()}'`);
+        turn.textContent="Current Turn  : "+(current==1?`${p2name}: '${playerTwo()}'`:`${p1name}: '${playerOne()}'`);
         return current;
     }
 
-    const gameEnd=()=>{
+    const gameEnd=(res)=>{
         let result=document.querySelector(".result");
-        result.textContent=(current==1?`Player two: '${playerTwo()}' won the game!`:`Player one: '${playerOne()}' won the game!`);
+        if(res=="tie") result.textContent="It's a tie!";
+        else result.textContent=(current==1?`${p2name}: '${playerTwo()}' won the game!`:`${p1name}: '${playerOne()}' won the game!`);
         grids.removeEventListener('click',clickedGrid);
         turn.textContent="";
     }
 
     return{
+        setP1Name,
+        setP2Name,
         playerOne,
         playerTwo,
         changeTurn,
@@ -100,7 +119,27 @@ const clickedGrid=e=>{
     gameBoard.setBoardArr(boardArr);
     gameBoard.fillBoard();
 
-    if(gameBoard.checkWin()) playerControl.gameEnd(); //playerControl.gameEnd();
+    if(gameBoard.checkTie()) playerControl.gameEnd("tie");
+    else if(gameBoard.checkWin()) playerControl.gameEnd("end"); //playerControl.gameEnd();
+};
+
+const submitNames=e=>{
+    let p1name=document.querySelector("#player1").value;
+    let p2name=document.querySelector("#player2").value;
+    playerControl.setP1Name(p1name);
+    playerControl.setP2Name(p2name);
+    document.querySelector(".form").style.display="none";
+    document.querySelector(".turn").textContent=`Current Turn-${p1name}: '${playerControl.playerOne()}'`;
+    console.log(gameBoard.getBoardArr());
+};
+
+const resetGame=e=>{
+    /*gameBoard.setBoardArr([]);
+    gameBoard.fillBoard();
+    document.querySelector("#player1").value="";
+    document.querySelector("#player2").value="";
+    document.querySelector(".form").style.display="flex";*/
+    location.reload();
 };
 
 gameBoard.fillBoard();
@@ -108,3 +147,10 @@ gameBoard.fillBoard();
 
 const grids=document.querySelector(".game-grid");
 grids.addEventListener('click',clickedGrid);
+
+
+const submit=document.querySelector(".submit");
+submit.addEventListener('click',submitNames);
+
+const reset=document.querySelector(".reset");
+reset.addEventListener('click',resetGame);

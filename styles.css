@@ -1,6 +1,23 @@
+body{
+    background-color: gray;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: greenyellow;
+    border: 2px solid black;
+}
 .header{
     text-align: center;
     font-family: sans-serif;
+    margin-top: 0px;
 }
 .game-grid{
     padding:20px;
@@ -8,6 +25,7 @@
     grid-template-columns: auto auto auto;
     grid-gap: 0px;
     justify-content: center;
+    padding-bottom: 0px;
 }
 
 [class*="grid-"]{
@@ -21,13 +39,31 @@
 }
 
 .turn{
-    padding:20px;
+    padding:10px;
     text-align: center;
     font-family: sans-serif;
+    color: rgb(165, 26, 26);
 }
 
 .result{
     text-align: center;
     font-family: sans-serif;
     padding:20px;
+    color: rgb(1, 63, 1);
+    font-weight: bold;
+}
+.submit{
+    margin-top: 10px;
+}
+.reset{
+    margin: 10px;
+}
+
+input{
+    width: 150px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
 }
