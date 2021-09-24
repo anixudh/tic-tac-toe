@@ -119,8 +119,9 @@ const clickedGrid=e=>{
     gameBoard.setBoardArr(boardArr);
     gameBoard.fillBoard();
 
-    if(gameBoard.checkTie()) playerControl.gameEnd("tie");
-    else if(gameBoard.checkWin()) playerControl.gameEnd("end"); //playerControl.gameEnd();
+    if(gameBoard.checkWin()) playerControl.gameEnd("end"); //playerControl.gameEnd();
+    else if(gameBoard.checkTie()) playerControl.gameEnd("tie");
+    
 };
 
 const submitNames=e=>{
